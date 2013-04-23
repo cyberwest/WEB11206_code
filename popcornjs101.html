@@ -1,0 +1,97 @@
+<html>
+<head>
+	<title>Popcorn test</title>
+	<script type="text/javascript" src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+}
+#videoplayer {
+    float: left;
+    width: 360px;
+    height:200px;
+    margin: 0;
+}
+#map {
+    margin: 0 0 0 4px;
+    float:left;
+    width: 200px;
+    height:204px;
+    background-color: gray;
+}
+#footnotes {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: lightgray;
+    clear: both;
+}
+#twitterdiv {
+    margin-top: 20px;
+    padding: 20px;
+    min-height: 100px;
+    background-color: lightgreen;
+}
+</style>
+
+<script type="text/javascript">
+
+// From http://popcornjs.org/popcorn-with-youtube
+//
+// This demonstrates how to use Youtube and footnotes
+//
+// The popcorn.js library is at: http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js
+
+
+// this function runs when the DOM (e.g. all webpage elements) has loaded
+document.addEventListener( "DOMContentLoaded", function() {
+	
+	// Create a popcorn instance by calling the Youtube player plugin
+	var popPlayer = Popcorn.youtube(
+		'#videoplayer',
+		'http://youtu.be/_pV2zz3z0oM');
+	
+	// add a footnote at 2 seconds, and remove it at 6 seconds
+	popPlayer.footnote({
+		start: 2,
+		end: 4,
+		text: "Pop!",
+		target: "footnotes"
+	});
+	
+	popPlayer.googlemap({
+		start: 4,
+		end: 6,
+		type: "ROADMAP",
+		target: "map",
+		lat: 43.665429,
+		lng: -79.403323
+	});
+	
+	popPlayer.twitter({
+		start: 5,
+		end: 15,
+		title: "Evan's Twitter",
+		src: "@evanraskob",
+		target: "twitterdiv",
+	});
+	
+	// play the video right away
+	popPlayer.play();
+
+});
+
+</script>
+
+
+<body>
+
+<div id="videoplayer"></div>
+<div id="map"></div>
+<div id="footnotes"></div>
+<div id="timecode"></div>
+<div id="twitterdiv"></div>
+
+</body>
+</html>
