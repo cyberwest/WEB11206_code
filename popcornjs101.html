@@ -1,5 +1,9 @@
-<html>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="lt-ie10 ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html class="lt-ie10 ie9" lang="en"><![endif]-->
+<!--[if gt IE 9]><!--><html lang="en" ><!--<![endif]-->    
 <head>
+	<meta charset="utf-8">
 	<title>Popcorn test</title>
 	<script type="text/javascript" src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -31,7 +35,9 @@ body {
     margin-top: 20px;
     padding: 20px;
     min-height: 100px;
-    background-color: lightgreen;
+    max-width: 360px;
+    display: none;
+    border: 1px solid lightgreen;
 }
 </style>
 
@@ -46,6 +52,9 @@ body {
 
 // this function runs when the DOM (e.g. all webpage elements) has loaded
 document.addEventListener( "DOMContentLoaded", function() {
+
+	console.log("loading");
+
 	
 	// Create a popcorn instance by calling the Youtube player plugin
 	var popPlayer = Popcorn.youtube(
@@ -69,6 +78,23 @@ document.addEventListener( "DOMContentLoaded", function() {
 		lng: -79.403323
 	});
 	
+	popPlayer.cue( 6, function() {
+		$('#twitterdiv').show(200);
+	});
+
+	popPlayer.cue( 10, function() {
+		$('#twitterdiv').hide(200);
+	});
+	
+	
+	popPlayer.on( "timeupdate", function() {
+    	document.getElementById( "timecode" ).innerHTML = "time elapsed: " + this.currentTime();
+	});
+	
+	/*
+	* THIS IS BROKEN!
+	*
+	
 	popPlayer.twitter({
 		start: 5,
 		end: 15,
@@ -76,10 +102,10 @@ document.addEventListener( "DOMContentLoaded", function() {
 		src: "@evanraskob",
 		target: "twitterdiv",
 	});
+	*/
 	
 	// play the video right away
 	popPlayer.play();
-
 });
 
 </script>
@@ -91,7 +117,10 @@ document.addEventListener( "DOMContentLoaded", function() {
 <div id="map"></div>
 <div id="footnotes"></div>
 <div id="timecode"></div>
-<div id="twitterdiv"></div>
+<div id="twitterdiv">
+<a class="twitter-timeline" href="https://twitter.com/evanraskob" data-widget-id="326643425149583360">Tweets by @evanraskob</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
 
 </body>
 </html>
